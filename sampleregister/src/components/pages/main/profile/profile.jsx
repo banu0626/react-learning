@@ -2,6 +2,6 @@ import React from "react";
 
 export class Profile extends React.Component {
     render() {
-      return <h2>Hi, I am a Car!</h2>;
+      return <h2>Hello World</h2>;
     }
   }
