@@ -1,4 +1,5 @@
 import axios from "axios";
+import { login_details } from "../components/pages/main/data";
 import { ERROR_RESPONSE_MESSAGE } from "../constants/messages";
 
 export const PostData = async (url, config = {}, headers = {}) => {
@@ -43,10 +44,18 @@ export const PatchData = async (url, config = {}, headers = {}) => {
   }
   return response;
 };
+export const fetchjson = () => {
+  const response = login_details;
+  if (response) {
+    return response;
+  }
+  return (response = ERROR_RESPONSE_MESSAGE);
+};
 const ApiMethods = {
   PostData,
   GetData,
   DeleteData,
   PatchData,
+  fetchjson,
 };
 export default ApiMethods;

@@ -8,3 +8,5 @@ export const FETCH_USER_URL = BASE_URL + "/view";
 export const DELETE_USER_URL = BASE_URL + "/";
 //URL for Edit user
 export const EDIT_USER_URL = BASE_URL + "/";
+
+export const REGISTER_URL = BASE_URL + "/register";

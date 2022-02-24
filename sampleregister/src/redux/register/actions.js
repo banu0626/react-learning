@@ -9,6 +9,7 @@ import {
   DELETE_USER_URL,
   FETCH_USER_URL,
   EDIT_USER_URL,
+  REGISTER_URL,
 } from "../../apiConfig/register";
 import {
   GetData,
@@ -56,6 +57,17 @@ export const deleteUser = (data) => {
 export const editUser = (id, data) => {
   return (dispatch) => {
     const response = PatchData(EDIT_USER_URL + id, data)
+      .then((res) => {
+        dispatch(fetchData());
+      })
+      .catch((error) => {
+        dispatch(fetchDataFailure(error.message));
+      });
+  };
+};
+export const RegUser = (data) => {
+  return (dispatch) => {
+    const response = PostData(REGISTER_URL, data)
       .then((res) => {
         dispatch(fetchData());
       })

@@ -1,4 +1,4 @@
-[
+export const login_details=[
     {
       "id": 1,
       "username":"afreen",
@@ -19,4 +19,4 @@
         "username":"prasana",
         "password":"prasana2000"
       }
-  ]
+  ];
