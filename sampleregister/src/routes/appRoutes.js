@@ -1,9 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import EditUser from "../components/pages/main/editUser/editUser";
-import Home from "../components/pages/main/home/home";
-import Login from "../components/pages/main/login";
-import Profile from "../components/pages/main/profile/profile";
+import {Home,Login,EditUser,Profile,ViewUser} from '../components/pages/index'
 function AppRoutes() {
   return (
     <div>
@@ -12,6 +9,7 @@ function AppRoutes() {
         <Route path="/edit" element={<EditUser />} />
        <Route path="/profile" element={<Profile/>}/> 
         <Route path="/login" element={<Login/>}/>
+        <Route path="/view" element={<ViewUser/>}/>
       </Routes>
     </div>
   );

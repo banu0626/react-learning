@@ -3,52 +3,129 @@ import { MaterialButton, TextField } from "../../../common";
 import MaterialRadio from "../../../common/radiobutton";
 import RadioGroup from "@mui/material/RadioGroup";
 import { connect } from "react-redux";
-import { RegUser } from "../../../../redux/register/actions";
+import { RegUser, fetchRegData } from "../../../../redux/register/actions";
+import { Link } from "react-router-dom";
+import "../../../../assets/stylesheet/css/style.css";
+import {
+  isValidEmailAddress,
+  isValidPhoneNumber,
+} from "../../../../utils/common/validation";
 
-const mapDispatchToProps=(dispatch)=>{
-  return{
-    adduser:()=>dispatch(RegUser())
-  }
-}
-
-
+const mapStateToProps = (state) => {
+  return {
+    app: state.app,
+  };
+};
+const mapDispatchToProps = () => {
+  return {
+    RegUser,
+    fetchRegData,
+  };
+};
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        firstName: "",
-        lastName: "",
-        mailid: "",
-        phone_no: "",
-        gender: ""
-      };
-  
+      firstName: "",
+      lastName: "",
+      mailid: "",
+      phone_no: "",
+      gender: "",
+      formErrors: {},
+    };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.initialState = this.state;
   }
   handleInput = (event) => {
+    if (event.target.name === "mailid") {
+      event.target.value
+        ? this.validateEmail(event.target.value)
+        : this.setState({ emailValid: "" });
+    }
+    if (event.target.name === "phone_no") {
+      event.target.value
+        ? this.validatePhoneNo(event.target.value)
+        : this.setState({ phoneValid: "" });
+    }
     this.setState({
       [event.target.name]: event.target.value,
     });
   };
+
   handleSubmit = (event) => {
-    alert(
-      `${this.state.firstName} ${this.state.lastName}  Registered Successfully !!!!`
-    );
-    console.log(this.state);
-   this.addUser()
-    // this.setState({
-    //   firstName: "",
-    //   lastName: "",
-    //   mailid: "",
-    //   phone_no: "",
-    //   gender: "",
-    // });
     event.preventDefault();
+    if (this.validateform()) {
+      this.props.RegUser(this.state);
+      alert("You have been successfully registered.");
+      this.setState(this.initialState)  
+    }
+  };
+
+  validateform = () => {
+    const { firstName, lastName, gender, mailid, phone_no } = this.state;
+    let formErrors = {};
+    let formIsValid = true;
+    if (!firstName) {
+      formErrors["firstNameErr"] = "First Name is required.";
+      formIsValid = false;
+    }
+    if (!lastName) {
+      formErrors["lastNameErr"] = "Last Name is required.";
+      formIsValid = false;
+    }
+    if (!phone_no) {
+      formErrors["phone_noErr"] = "Phone Number is required.";
+      formIsValid = false;
+    }
+    if (!mailid) {
+      formErrors["mailidErr"] = "Mail ID is required.";
+      formIsValid = false;
+    }
+    if (!gender) {
+      formErrors["genderErr"] = "Gender is required.";
+      formIsValid = false;
+    }
+
+    this.setState({ formErrors: formErrors });
+    return formIsValid;
+  };
+
+  validateEmail = (email) => {
+    let emailValid = true;
+    if (!isValidEmailAddress(email)) {
+      this.setState({
+        emailValid: "Please Enter the valid Email Address",
+      });
+      emailValid = false;
+    } else {
+      this.setState({
+        emailValid: "",
+      });
+      emailValid = true;
+    }
+    return emailValid;
+  };
+  validatePhoneNo = (number) => {
+    let phoneValid = true;
+    if (!isValidPhoneNumber(number)) {
+      this.setState({
+        phoneValid: "Please Enter the valid Phone Number",
+      });
+      phoneValid = false;
+    } else {
+      this.setState({
+        phoneValid: "",
+      });
+      phoneValid = true;
+    }
+    return phoneValid;
   };
 
   render() {
+    const { firstNameErr, lastNameErr, mailidErr, genderErr, phone_noErr } =
+      this.state.formErrors;
+
     return (
       <div>
         <div className="row d-flex align-items-center justify-content-center">
@@ -67,6 +144,7 @@ class Profile extends React.Component {
                   onChange={this.handleInput}
                 />
               </div>
+              {firstNameErr && <span className="error">{firstNameErr}</span>}
               <br />
               <div className="form-group">
                 <TextField
@@ -80,6 +158,7 @@ class Profile extends React.Component {
                   onChange={this.handleInput}
                 />
               </div>
+              {lastNameErr && <span className="error">{lastNameErr}</span>}
               <br />
               <div className="form-group">
                 <TextField
@@ -93,6 +172,10 @@ class Profile extends React.Component {
                   onChange={this.handleInput}
                 />
               </div>
+              {this.state.emailValid && (
+                <span className="error">{this.state.emailValid}</span>
+              )}
+              {mailidErr && <span className="error">{mailidErr}</span>}
               <br />
               <div className="form-group">
                 <TextField
@@ -101,11 +184,16 @@ class Profile extends React.Component {
                   name="phone_no"
                   size="small"
                   label="Phone_no"
+                  inputProps={{ maxLength: 10 }}
                   variant="outlined"
                   value={this.state.phone_no}
                   onChange={this.handleInput}
                 />
               </div>
+              {this.state.phoneValid && (
+                <span className="error">{this.state.phoneValid}</span>
+              )}
+              {phone_noErr && <span className="error">{phone_noErr}</span>}
               <br />
               <div className="form-group">
                 <RadioGroup
@@ -127,14 +215,26 @@ class Profile extends React.Component {
                   />
                 </RadioGroup>
               </div>
+              {genderErr && <span className="error">{genderErr}</span>}
               <br />
 
               <div className="d-flex justify-content-center">
                 <MaterialButton
                   value="Register"
                   variant="outlined"
-                  message="Register"
+                  message="Save"
                   onClick={this.handleSubmit}
+                  size="medium"
+                />
+                &nbsp;&nbsp;
+                <MaterialButton
+                  value="Register"
+                  variant="outlined"
+                  message={
+                    <Link to="/login" className="link">
+                      Back
+                    </Link>
+                  }
                   size="medium"
                 />
               </div>
@@ -145,4 +245,4 @@ class Profile extends React.Component {
     );
   }
 }
-export default connect(mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps())(Profile);

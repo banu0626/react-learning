@@ -10,5 +10,6 @@ export default function TextBox(props) {
   name={props.name}
   className={props.className}
   size={props.size}
+  inputProps={props.inputProps}
   onChange={props.onChange} />;
 }

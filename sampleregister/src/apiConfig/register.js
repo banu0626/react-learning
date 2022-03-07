@@ -10,3 +10,5 @@ export const DELETE_USER_URL = BASE_URL + "/";
 export const EDIT_USER_URL = BASE_URL + "/";
 
 export const REGISTER_URL = BASE_URL + "/register";
+
+export const FETCH_REGISTER_URL = BASE_URL + "/viewreg";

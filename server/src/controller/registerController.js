@@ -7,4 +7,5 @@ module.exports = {
     deletedata: (req,res)=>removedata(req,res,Register),
     updatedata: (req,res)=>update(req,res,Register) ,
     addnewuser:(req,res)=>create(req,res,newuserModel),
+    viewRegdata:(req,res)=>view(req,res,newuserModel) ,
     }

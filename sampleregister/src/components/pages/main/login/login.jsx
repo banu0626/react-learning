@@ -1,9 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  INVALID_CREDENTIALS,
-} from "../../../../constants/messages";
+import { INVALID_CREDENTIALS } from "../../../../constants/messages";
 import { fetchjson } from "../../../../services/baseapiservices";
 import { MaterialButton, TextField } from "../../../common";
 
@@ -61,7 +59,7 @@ export default function Login() {
                 onChange={(e) => handleInput(e)}
               />
             </div>
-            <h6 style={{ color: "red" }}>{message}</h6>
+            <h6 className="error">{message}</h6>
             <br />
             <div className="d-flex justify-content-center">
               <MaterialButton

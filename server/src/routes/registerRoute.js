@@ -10,4 +10,6 @@ router.delete('/:id',registerController.deletedata);
 router.patch('/:id',registerController.updatedata);
 
 router.post('/register',registerController.addnewuser);
+
+router.get('/viewreg',registerController.viewRegdata);
 module.exports = router

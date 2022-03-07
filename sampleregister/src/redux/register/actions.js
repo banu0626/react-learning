@@ -3,6 +3,7 @@ import {
   fetchDataRequest,
   fetchDataSuccess,
   addDataSuccess,
+  addDataFailure,
 } from "../app/actions";
 import {
   ADD_USER_URL,
@@ -10,6 +11,7 @@ import {
   FETCH_USER_URL,
   EDIT_USER_URL,
   REGISTER_URL,
+  FETCH_REGISTER_URL,
 } from "../../apiConfig/register";
 import {
   GetData,
@@ -36,10 +38,10 @@ export const addUser = (data) => {
   return (dispatch) => {
     const response = PostData(ADD_USER_URL, data)
       .then((res) => {
-        dispatch(fetchData());
+     dispatch(fetchData())
       })
       .catch((error) => {
-        dispatch(fetchDataFailure(error.message));
+        dispatch(addDataFailure(error.message));
       });
   };
 };
@@ -66,10 +68,24 @@ export const editUser = (id, data) => {
   };
 };
 export const RegUser = (data) => {
+  console.log(data)
   return (dispatch) => {
     const response = PostData(REGISTER_URL, data)
       .then((res) => {
-        dispatch(fetchData());
+        dispatch(addDataSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(addDataFailure(error.message));
+      });
+  };
+};
+export const fetchRegData = () => {
+  return (dispatch) => {
+    dispatch(fetchDataRequest());
+
+    const response = GetData(FETCH_REGISTER_URL)
+      .then((res) => {
+        dispatch(fetchDataSuccess(res.data));
       })
       .catch((error) => {
         dispatch(fetchDataFailure(error.message));

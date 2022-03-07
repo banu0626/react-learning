@@ -1,0 +1,9 @@
+{
+    "headers" : [
+    {"field":"firstName","sortable":true,"filter":true},
+    {"field":"lastName","sortable":true,"filter":true},  
+    {"field":"phone_no"},
+    {"field":"mailid"},
+    {"field":"gender","sortable":true,"filter":true}
+    ]
+}

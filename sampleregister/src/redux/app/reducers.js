@@ -31,6 +31,12 @@ const reducer = (state = INITIAL_STATE, action) => {
           data: action.payload,
           error: "",
         };
+        case AppActionsTypes.ADD_DATA_FAILURE:
+        return {
+          loading: false,
+          data: [],
+          error: action.payload,
+        };
       default:
       return state;
   }

@@ -20,9 +20,15 @@ export const fetchDataRequest = () => {
     }
   }
 
-  export const addDataSuccess = data => {
+  export const addDataSuccess =  (data)=> {
     return {
       type: AppActionsTypes.ADD_DATA_SUCCESS,
       payload: data
+    }
+  }
+  export const addDataFailure = error => {
+    return {
+      type: AppActionsTypes.ADD_DATA_FAILURE,
+      payload: error
     }
   }
