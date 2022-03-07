@@ -11,6 +11,7 @@ import {
   isValidPhoneNumber,
 } from "../../../../utils/common/validation";
 
+
 const mapStateToProps = (state) => {
   return {
     app: state.app,
@@ -244,5 +245,4 @@ class Profile extends React.Component {
       </div>
     );
   }
-}
-export default connect(mapStateToProps, mapDispatchToProps())(Profile);
+}export default connect(mapStateToProps, mapDispatchToProps())(Profile);
